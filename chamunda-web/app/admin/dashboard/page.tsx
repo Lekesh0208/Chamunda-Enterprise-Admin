@@ -34,7 +34,7 @@ export default function DashboardPage() {
     setLoading(true);
     const { data, error } = await supabase
       .from("invoices")
-      .select("invoice_total, date, line_items, clients ( id, firm_name )");
+      .select("invoice_total, date, line_items, clients!client_id ( id, firm_name )");
     if (error) setErrorMsg(error.message);
     setRows((data as InvRow[]) || []);
     setLoading(false);
