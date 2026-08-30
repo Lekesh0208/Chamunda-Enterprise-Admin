@@ -27,7 +27,7 @@ export default function SalesLogPage() {
     setLoading(true);
     const { data, error } = await supabase
       .from("invoices")
-      .select("*, clients ( firm_name )")
+      .select("*, clients!client_id ( firm_name )")
       .order("created_at", { ascending: false });
     if (error) showToast("Could not load Sales Log: " + error.message);
     setRows((data as Row[]) || []);
