@@ -5,7 +5,7 @@ export default async function DuesSummaryPage() {
   const supabase = await createClient();
   const { data: invoices, error } = await supabase
     .from("invoices")
-    .select("invoice_total, payment_status, clients ( id, firm_name )");
+    .select("invoice_total, payment_status, clients!client_id ( id, firm_name )");
 
   if (error) {
     throw new Error("Could not load Dues Summary: " + error.message);
