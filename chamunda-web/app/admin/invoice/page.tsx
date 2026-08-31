@@ -256,9 +256,9 @@ function InvoicePageInner() {
             <div key={idx} className="grid gap-2 items-center" style={{ gridTemplateColumns: "3fr 1fr 0.8fr 0.8fr 0.9fr 0.9fr auto" }}>
               <input list="item-catalog" value={li.description} onChange={(e) => updateLineItem(idx, "description", e.target.value)} placeholder="Description of goods" className="border border-slate-300 rounded px-2 py-1.5 text-sm" />
               <input value={li.hsn} onChange={(e) => updateLineItem(idx, "hsn", e.target.value)} placeholder="HSN" className="border border-slate-300 rounded px-2 py-1.5 text-sm" />
-              <input value={li.unit} onChange={(e) => updateLineItem(idx, "unit", e.target.value)} placeholder="Unit" className="border border-slate-300 rounded px-2 py-1.5 text-sm" />
               <input type="number" value={li.qty} onChange={(e) => updateLineItem(idx, "qty", e.target.value)} placeholder="Qty" className="border border-slate-300 rounded px-2 py-1.5 text-sm" />
               <input type="number" value={li.rate} onChange={(e) => updateLineItem(idx, "rate", e.target.value)} placeholder="Rate" className="border border-slate-300 rounded px-2 py-1.5 text-sm" />
+              <input value={li.unit} onChange={(e) => updateLineItem(idx, "unit", e.target.value)} placeholder="Unit" className="border border-slate-300 rounded px-2 py-1.5 text-sm" />
               <div className="text-sm font-medium text-slate-700 text-right pr-2">
                 {((Number(li.qty) || 0) * (Number(li.rate) || 0)).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
               </div>
