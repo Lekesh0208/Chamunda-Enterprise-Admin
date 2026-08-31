@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { COMPANY, TERMS } from "@/lib/constants";
 import { formatINR, numberToWordsIndian } from "@/lib/calculations";
-import { emptyLineItem } from "@/lib/utils";
 import type { Client, Invoice, Totals } from "@/lib/types";
 
 // Renders the tax invoice pixel-for-pixel matching the original LibreOffice
@@ -20,7 +19,8 @@ export default function InvoiceDocument({
   totals: Totals;
 }) {
   const rows = [...invoice.line_items];
-  while (rows.length < 5) rows.push(emptyLineItem());
+  const BLANK_ROW = { description: "", hsn: "", unit: "", qty: "", rate: "" };
+  while (rows.length < 5) rows.push(BLANK_ROW);
 
   return (
     <div style={{ fontFamily: '"Times New Roman", serif', maxWidth: "900px", margin: "0 auto" }}>
@@ -108,8 +108,8 @@ export default function InvoiceDocument({
             <td className="border-r border-b-2 border-black p-1.5 font-bold text-center">Description of Goods</td>
             <td className="border-r border-b-2 border-black p-1.5 font-bold text-center w-20">HSN Code</td>
             <td className="border-r border-b-2 border-black p-1.5 font-bold text-center w-16">Quantity</td>
-            <td className="border-r border-b-2 border-black p-1.5 font-bold text-center w-14">Unit</td>
             <td className="border-r border-b-2 border-black p-1.5 font-bold text-center w-20">Rate</td>
+            <td className="border-r border-b-2 border-black p-1.5 font-bold text-center w-14">Unit</td>
             <td colSpan={2} className="border-b-2 border-black p-1.5 font-bold text-center w-24">Amount</td>
           </tr>
           {rows.map((li, idx) => (
@@ -118,8 +118,8 @@ export default function InvoiceDocument({
               <td className="border-r border-black p-1.5">{li.description}</td>
               <td className="border-r border-black p-1.5 text-center">{li.hsn}</td>
               <td className="border-r border-black p-1.5 text-center">{li.qty}</td>
-              <td className="border-r border-black p-1.5 text-center">{li.unit}</td>
               <td className="border-r border-black p-1.5 text-right">{li.rate ? Number(li.rate).toFixed(2) : ""}</td>
+              <td className="border-r border-black p-1.5 text-center">{li.unit}</td>
               <td colSpan={2} className="p-1.5 text-right">
                 {li.description && li.qty ? formatINR((Number(li.qty) || 0) * (Number(li.rate) || 0)).replace("\u20B9 ", "") : ""}
               </td>
