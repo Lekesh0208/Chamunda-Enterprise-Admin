@@ -24,7 +24,7 @@ export default function InvoiceDocument({
 
   return (
     <div style={{ fontFamily: '"Times New Roman", serif', maxWidth: "900px", margin: "0 auto" }}>
-      <table className="w-full border-collapse text-sm" style={{ border: "1.5px solid black" }}>
+      <table className="w-full border-collapse" style={{ border: "1.5px solid black", fontSize: "12.5px", lineHeight: "17px" }}>
         <tbody>
           <tr>
             <td colSpan={8} className="py-2 px-3 border-b-2 border-black">
