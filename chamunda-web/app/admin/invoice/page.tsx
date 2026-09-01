@@ -154,8 +154,58 @@ function InvoicePageInner() {
     loadAll();
   }
 
-  function handlePrint() {
+  function sanitizeForFilename(s: string): string {
+    return (s || "")
+      .trim()
+      .replace(/[^a-zA-Z0-9]+/g, "_")
+      .replace(/^_+|_+$/g, "");
+  }
+
+  async function handlePrint() {
+    let orderNumber = 1;
+    if (invoice.client_id) {
+      try {
+        if (invoice.id) {
+          // Existing invoice: count this client's invoices up to and including this one,
+          // ordered by creation time, so reprinting always gives the same order number.
+          const { data: current } = await supabase
+            .from("invoices")
+            .select("created_at")
+            .eq("id", invoice.id)
+            .single();
+          const { count } = await supabase
+            .from("invoices")
+            .select("id", { count: "exact", head: true })
+            .eq("client_id", invoice.client_id)
+            .lte("created_at", current?.created_at || new Date().toISOString());
+          orderNumber = count || 1;
+        } else {
+          // Not yet saved: this will be their next order.
+          const { count } = await supabase
+            .from("invoices")
+            .select("id", { count: "exact", head: true })
+            .eq("client_id", invoice.client_id);
+          orderNumber = (count || 0) + 1;
+        }
+      } catch {
+        orderNumber = 1; // fall back gracefully - filename is a convenience, never block printing
+      }
+    }
+
+    const clientName = sanitizeForFilename(client?.firm_name || "Client");
+    const invNo = sanitizeForFilename(invoice.invoice_no);
+    const dateStr = sanitizeForFilename(invoice.date);
+    const filename = `${clientName}_Inv${invNo}_${dateStr}_Order${orderNumber}`;
+
+    const originalTitle = document.title;
+    document.title = filename;
+    const restoreTitle = () => {
+      document.title = originalTitle;
+      window.removeEventListener("afterprint", restoreTitle);
+    };
+    window.addEventListener("afterprint", restoreTitle);
     window.print();
+    setTimeout(restoreTitle, 15000); // safety fallback if afterprint never fires
   }
 
   const router = useRouter();
