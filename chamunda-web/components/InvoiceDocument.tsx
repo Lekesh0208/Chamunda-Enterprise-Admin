@@ -20,14 +20,14 @@ export default function InvoiceDocument({
 }) {
   const rows = [...invoice.line_items];
   const BLANK_ROW = { description: "", hsn: "", unit: "", qty: "", rate: "" };
-  while (rows.length < 5) rows.push(BLANK_ROW);
+  while (rows.length < 2) rows.push(BLANK_ROW);
 
   return (
     <div style={{ fontFamily: '"Times New Roman", serif', maxWidth: "900px", margin: "0 auto" }}>
       <table className="w-full border-collapse text-sm" style={{ border: "1.5px solid black" }}>
         <tbody>
           <tr>
-            <td colSpan={8} className="p-3 border-b-2 border-black">
+            <td colSpan={8} className="py-2 px-3 border-b-2 border-black">
               <div className="flex items-center gap-3">
                 <Image src="/logo.png" alt="Chamunda Enterprise" width={220} height={124} style={{ height: "60px", width: "auto" }} priority />
                 <div className="text-3xl font-bold">
@@ -51,50 +51,50 @@ export default function InvoiceDocument({
           <tr>
             <td colSpan={4} className="border-r-2 border-b border-black p-2 align-top">
               <div className="font-bold">Buyer (Bill to)</div>
-              <div className="font-bold mt-1">{client ? client.firm_name : "-"}</div>
+              <div className="font-bold mt-[2px]">{client ? client.firm_name : "-"}</div>
               <div>{client ? client.address : ""}</div>
-              <div className="mt-1">GSTIN/UIN :- {client ? client.gstin : ""}</div>
+              <div className="mt-[2px]">GSTIN/UIN :- {client ? client.gstin : ""}</div>
               <div>State Name :- {client ? client.state : ""}</div>
-              <div className="mt-1">Contact person :- {client ? client.contact_person : ""}</div>
+              <div className="mt-[2px]">Contact person :- {client ? client.contact_person : ""}</div>
               <div>Contact no. :- {client ? client.contact_no : ""}</div>
             </td>
             <td colSpan={2} className="border-r border-b border-black p-2 align-top text-center">
               <div className="font-bold">Invoice No :</div>
               <div>{invoice.invoice_no}</div>
-              <div className="font-bold mt-2">Buyer&apos;s Order No :</div>
+              <div className="font-bold mt-[5px]">Buyer&apos;s Order No :</div>
               <div>{invoice.buyer_order_no || "-"}</div>
-              <div className="font-bold mt-2">Delivery Challan No:</div>
+              <div className="font-bold mt-[5px]">Delivery Challan No:</div>
               <div>{invoice.delivery_challan_no || "-"}</div>
             </td>
             <td colSpan={2} className="border-b border-black p-2 align-top text-center">
               <div className="font-bold">Invoice Date :</div>
               <div>{invoice.date}</div>
-              <div className="font-bold mt-2">Terms of Payments</div>
+              <div className="font-bold mt-[5px]">Terms of Payments</div>
               <div>{invoice.terms_of_payment || "-"}</div>
-              <div className="font-bold mt-2">Dated</div>
+              <div className="font-bold mt-[5px]">Dated</div>
               <div>{invoice.dated || "-"}</div>
             </td>
           </tr>
           <tr>
             <td colSpan={4} className="border-r-2 border-b-2 border-black p-2 align-top">
               <div className="font-bold">Consignee (Shipment to)</div>
-              <div className="font-bold mt-1">{consignee ? consignee.firm_name : "-"}</div>
+              <div className="font-bold mt-[2px]">{consignee ? consignee.firm_name : "-"}</div>
               <div>{consignee ? consignee.address : ""}</div>
-              <div className="mt-1">GSTIN/UIN :- {consignee ? consignee.gstin : ""}</div>
+              <div className="mt-[2px]">GSTIN/UIN :- {consignee ? consignee.gstin : ""}</div>
               <div>State Name :- {consignee ? consignee.state : ""}</div>
-              <div className="mt-1">Contact person :- {consignee ? consignee.contact_person : ""}</div>
+              <div className="mt-[2px]">Contact person :- {consignee ? consignee.contact_person : ""}</div>
               <div>Contact no. :- {consignee ? consignee.contact_no : ""}</div>
             </td>
             <td colSpan={2} className="border-r border-b-2 border-black p-2 align-top text-center">
               <div className="font-bold">Dispatched Through</div>
               <div>{invoice.dispatched_through || "NA"}</div>
-              <div className="font-bold mt-2">LR-RR No.</div>
+              <div className="font-bold mt-[5px]">LR-RR No.</div>
               <div>{invoice.lr_rr_no || "NA"}</div>
             </td>
             <td colSpan={2} className="border-b-2 border-black p-2 align-top text-center">
               <div className="font-bold">Destination</div>
               <div>&nbsp;</div>
-              <div className="font-bold mt-2">Motor Vehicle No.</div>
+              <div className="font-bold mt-[5px]">Motor Vehicle No.</div>
               <div>{invoice.motor_vehicle_no || "NA"}</div>
             </td>
           </tr>
@@ -126,56 +126,56 @@ export default function InvoiceDocument({
             </tr>
           ))}
           <tr>
-            <td colSpan={6} className="border-r border-t-2 border-black p-1.5"></td>
-            <td colSpan={2} className="border-t-2 border-black p-1.5 text-right font-medium">{totals.subtotal.toFixed(2)}</td>
+            <td colSpan={6} className="border-r border-t-2 border-black p-[4px_6px]"></td>
+            <td colSpan={2} className="border-t-2 border-black p-[4px_6px] text-right font-medium">{totals.subtotal.toFixed(2)}</td>
           </tr>
           <tr>
-            <td colSpan={6} className="border-r border-black p-1.5 text-right italic">Packing &amp; Forwarding Charges</td>
-            <td colSpan={2} className="border-black p-1.5 text-right">{totals.packing.toFixed(2)}</td>
+            <td colSpan={6} className="border-r border-black p-[4px_6px] text-right italic">Packing &amp; Forwarding Charges</td>
+            <td colSpan={2} className="border-black p-[4px_6px] text-right">{totals.packing.toFixed(2)}</td>
           </tr>
           <tr>
-            <td colSpan={6} className="border-r border-black p-1.5 text-right italic">Freight &amp; Loading Charges</td>
-            <td colSpan={2} className="border-black p-1.5 text-right">{totals.freight.toFixed(2)}</td>
+            <td colSpan={6} className="border-r border-black p-[4px_6px] text-right italic">Freight &amp; Loading Charges</td>
+            <td colSpan={2} className="border-black p-[4px_6px] text-right">{totals.freight.toFixed(2)}</td>
           </tr>
           <tr>
-            <td colSpan={6} className="border-r border-black p-1.5 text-right italic">Sales Tax - SGST (9%)</td>
-            <td colSpan={2} className="border-black p-1.5 text-right">{totals.sgst.toFixed(2)}</td>
+            <td colSpan={6} className="border-r border-black p-[4px_6px] text-right italic">Sales Tax - SGST (9%)</td>
+            <td colSpan={2} className="border-black p-[4px_6px] text-right">{totals.sgst.toFixed(2)}</td>
           </tr>
           <tr>
-            <td colSpan={6} className="border-r border-black p-1.5 text-right italic">Central Tax - CGST (9%)</td>
-            <td colSpan={2} className="border-black p-1.5 text-right">{totals.cgst.toFixed(2)}</td>
+            <td colSpan={6} className="border-r border-black p-[4px_6px] text-right italic">Central Tax - CGST (9%)</td>
+            <td colSpan={2} className="border-black p-[4px_6px] text-right">{totals.cgst.toFixed(2)}</td>
           </tr>
           <tr>
-            <td colSpan={6} className="border-r border-black p-1.5 text-right italic">IGST</td>
-            <td colSpan={2} className="border-black p-1.5 text-right">{totals.igst.toFixed(2)}</td>
+            <td colSpan={6} className="border-r border-black p-[4px_6px] text-right italic">IGST</td>
+            <td colSpan={2} className="border-black p-[4px_6px] text-right">{totals.igst.toFixed(2)}</td>
           </tr>
           <tr>
-            <td colSpan={6} className="border-r border-black p-1.5 text-right italic">Rounding off</td>
-            <td colSpan={2} className="border-black p-1.5 text-right">{totals.roundOff.toFixed(2)}</td>
+            <td colSpan={6} className="border-r border-black p-[4px_6px] text-right italic">Rounding off</td>
+            <td colSpan={2} className="border-black p-[4px_6px] text-right">{totals.roundOff.toFixed(2)}</td>
           </tr>
           <tr style={{ background: "#f2d4d4" }}>
-            <td colSpan={6} className="border-r-2 border-black p-1.5 text-right font-bold">T o t a l &hellip;&hellip;</td>
-            <td colSpan={2} className="border-black p-1.5 text-right font-bold">{formatINR(totals.total)}</td>
+            <td colSpan={6} className="border-r-2 border-black p-[4px_6px] text-right font-bold">T o t a l &hellip;&hellip;</td>
+            <td colSpan={2} className="border-black p-[4px_6px] text-right font-bold">{formatINR(totals.total)}</td>
           </tr>
           <tr>
-            <td colSpan={3} className="border-r-2 border-b-2 border-black p-1.5 font-bold">Total Amount in Words:-</td>
-            <td colSpan={5} className="border-b-2 border-black p-1.5 italic">Rupees {numberToWordsIndian(totals.total)} Only</td>
+            <td colSpan={3} className="border-r-2 border-b-2 border-black p-[4px_6px] font-bold">Total Amount in Words:-</td>
+            <td colSpan={5} className="border-b-2 border-black p-[4px_6px] italic">Rupees {numberToWordsIndian(totals.total)} Only</td>
           </tr>
           <tr>
-            <td colSpan={4} className="border-r-2 border-b border-black p-2 align-top">
+            <td colSpan={4} className="border-r-2 border-b border-black p-2 align-top leading-tight">
               <div className="font-bold text-center border-b border-black pb-1 mb-1">Declaration</div>
               <div className="font-bold">Terms &amp; Conditions :-</div>
               {TERMS.map((t, i) => (
                 <div key={i}>({i + 1}) {t}</div>
               ))}
             </td>
-            <td colSpan={4} className="border-b border-black p-2 align-top">
+            <td colSpan={4} className="border-b border-black p-2 align-top leading-tight">
               <div className="font-bold text-center border-b border-black pb-1 mb-1">Company&apos;s Bank Details</div>
               <div><span className="font-bold">Bank &amp; Branch Name</span> : {COMPANY.bank}, {COMPANY.branch}</div>
               <div><span className="font-bold">A/c No.</span> : {COMPANY.accNo}</div>
               <div><span className="font-bold">IFS Code</span> : {COMPANY.ifsc}</div>
-              <div className="text-center font-bold mt-4">For CHAMUNDA ENTERPRISE</div>
-              <div className="text-center mt-6">Authorised Signatory</div>
+              <div className="text-center font-bold mt-[10px]">For CHAMUNDA ENTERPRISE</div>
+              <div className="text-center mt-[16px]">Authorised Signatory</div>
             </td>
           </tr>
           <tr>
